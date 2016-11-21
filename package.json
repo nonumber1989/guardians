@@ -1,0 +1,42 @@
+{
+  "name": "guardians",
+  "version": "0.0.0",
+  "description": "guardians platform",
+  "homepage": "guardians",
+  "author": {
+    "name": "steven xu",
+    "email": "nonumber1989@gmail",
+    "url": "https://github.com/guardians"
+  },
+  "repository": "https://github.com/guardians",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "guardians",
+    "express",
+    "mongoose",
+    "redis"
+  ],
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "bson": "^0.5.7",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.3.3",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^7.1.9",
+    "lodash": "^4.17.2",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.6.8",
+    "morgan": "^1.7.0",
+    "serve-favicon": "^2.3.2"
+  }
+}
