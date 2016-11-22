@@ -12,5 +12,11 @@ guardians.use(function(req, res){
   res.end('guardians of galaxy!\n');
 });
 
-//create node.js http server and listen on port
-http.createServer(guardians).listen(3000);
+//create http server 
+var server  = http.createServer(guardians);
+var io = require('socket.io')(server);
+io.on('connection', function(client){
+  client.on('event', function(data){});
+  client.on('disconnect', function(){});
+});
+server.listen(3000);
