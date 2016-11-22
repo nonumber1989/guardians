@@ -15,8 +15,6 @@
   ],
   "keywords": [
     "guardians",
-    "express",
-    "mongoose",
     "redis"
   ],
   "private": true,
@@ -25,6 +23,7 @@
   },
   "dependencies": {
     "connect": "^3.5.0",
+    "node-redis": "^0.1.7",
     "socket.io": "^1.6.0"
   }
 }
