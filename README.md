@@ -3,7 +3,7 @@ Guardians is a little platform for notification
 
 ## Why
 
-  + some application lack notification 
+  + some applications lack of notification mechanism
   + no need for complicated notification environment setup
   + support push and pull
 
@@ -13,5 +13,5 @@ Guardians is a little platform for notification
   + RESTful
   + Push & Pull combination
 
- ## Contact
+## Contact
    [steven.xu](nonumber1989@gmail.com) 
