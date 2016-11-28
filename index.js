@@ -28,19 +28,24 @@ var server = http.createServer(guardians);
 var io = socketIo(server);
 
 
-var chat = io.of('/chat').on('connection', function(socket) {
-    socket.emit('chatMessage', {'fromChat':"here is a message form chat !"});
-    socket.on('chatEvent', function(data) {
-        console.log("chat event ----"+data);
+// handle incoming connections from clients
+io.of('/chat').on('connection', function(socket) {
+    // once a client has connected, we expect to get a ping from them saying what room they want to join
+    socket.on('room', function(room) {
+        console.log("room ----" + room)
+        socket.join(room);
     });
+
+        // now, it's easy to send a message to just the clients in a given room
+    room = "abc123";
+    setInterval(function() {
+        io.nsps['/chat'].in(room).emit('message', 'what is going on, party people?');
+        // this message will NOT go to the client defined above
+        io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
+    }, 5000);
+
 });
 
-var news = io.of('/news').on('connection', function(socket) {
-    socket.emit('newsMessage', { 'fronNews': 'here is a message from news !' });
-    socket.on('newsEvent', function(data) {
-        console.log("news event ----"+data);
-    });
-});
 
 
 server.listen(3000);

@@ -1,20 +1,18 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var chat = io.connect('http://localhost:3000/chat'),
-    news = io.connect('http://localhost:3000/news');
+// set-up a connection between the client and the server
+var socket = io.connect("http://localhost:3000/chat");
 
-chat.on('chatMessage', function(data) {
-    console.log("from chat:" + data);
-});
-chat.emit('chatEvent', {
-    my: 'chat event'
+// let's assume that the client page, once rendered, knows what room it wants to join
+var room = "abc123";
+
+socket.on('connect', function() {
+   // Connected, let's sign-up for to receive messages for this room
+   socket.emit('room', room);
 });
 
+socket.on('message', function(data) {
+   console.log('Incoming message:', data);
+});
 
-news.on('newsMessage', function(data) {
-    console.log("from news:" + data);
-});
-news.emit('newsEvent', {
-    my: 'chat event'
-});
 </script>
