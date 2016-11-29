@@ -1,16 +1,10 @@
-var connect = require('connect');
 var http = require('http');
 var socketIo = require('socket.io')
 var fs = require('fs');
 var namespaces = require('./configurations/configuration');
-var guardians = connect();
 
-// parse urlencoded request bodies into req.body
-var bodyParser = require('body-parser');
-guardians.use(bodyParser.urlencoded({ extended: false }));
-
-// respond to all requests
-guardians.use(function(req, res) {
+//create http server 
+var server = http.createServer(function(req, res) {
     fs.readFile(__dirname + '/index.html',
         function(err, data) {
             if (err) {
@@ -23,8 +17,6 @@ guardians.use(function(req, res) {
         });
 });
 
-//create http server 
-var server = http.createServer(guardians);
 var io = socketIo(server);
 
 // handle incoming connections from clients
