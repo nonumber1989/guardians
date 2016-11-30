@@ -1,35 +1,35 @@
 {
-    "name": "guardians",
-    "version": "0.0.0",
-    "description": "guardians platform",
-    "homepage": "guardians",
-    "author": {
-        "name": "steven xu",
-        "email": "nonumber1989@gmail",
-        "url": "https://github.com/guardians"
-    },
-    "repository": "https://github.com/guardians",
-    "license": "MIT",
-    "files": [
-        "index.js"
-    ],
-    "keywords": [
-        "guardians",
-        "redis"
-    ],
-    "private": true,
-    "scripts": {
-        "start": "node ./bin/www"
-    },
-    "dependencies": {
-        "express": "^4.14.0",
-        "express-jwt": "^5.1.0",
-        "jsonwebtoken": "^7.1.9",
-        "node-redis": "^0.1.7",
-        "socket.io": "^1.6.0",
-        "body-parser": "~1.15.2",
-        "cookie-parser": "~1.4.3",
-        "debug": "~2.2.0",
-        "morgan": "~1.7.0"
-    }
+  "name": "guardians",
+  "version": "0.0.0",
+  "description": "guardians platform",
+  "homepage": "guardians",
+  "author": {
+    "name": "steven xu",
+    "email": "nonumber1989@gmail",
+    "url": "https://github.com/guardians"
+  },
+  "repository": "https://github.com/guardians",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "guardians",
+    "redis"
+  ],
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.1.9",
+    "morgan": "~1.7.0",
+    "node-redis": "^0.1.7",
+    "socket.io": "^1.6.0"
+  }
 }
