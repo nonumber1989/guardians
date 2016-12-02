@@ -1,8 +1,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
 // set-up a connection between the client and the server
-var socket = io.connect("http://localhost:3000/chat");
-
+var socket = io.connect('http://localhost:4000/chat', {
+  'query': 'token=' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVlZWUiLCJuYW1lIjoiZGRkZCIsImlhdCI6MTQ4MDY5MjIyOSwiZXhwIjoxNDgxMjk3MDI5fQ.c3GXVYXM3SFJS2utAB1wP3VjsJsWUN64l4C4kFCAza8'
+});
 // let's assume that the client page, once rendered, knows what room it wants to join
 var room = "abc123";
 

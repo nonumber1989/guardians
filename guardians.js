@@ -18,9 +18,13 @@ var server = http.createServer(function(req, res) {
 });
 
 var io = socketIo(server);
-
+io.use(socketioJwt.authorize({
+  secret: 'nonumber1989',
+  handshake: true
+}));
 // handle incoming connections from clients
 io.of('/chat').on('connection', function(socket) {
+    console.log('hello! ', socket.decoded_token.name);
     // once a client has connected, we expect to get a ping from them saying what room they want to join
     socket.on('room', function(room) {
         console.log("room ----" + room)
@@ -36,4 +40,4 @@ setInterval(function() {
     io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
 }, 5000);
 
-server.listen(4000);
+server.listen(3000);

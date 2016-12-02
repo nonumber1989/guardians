@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 
 var configuration = require('./configurations/configuration');
 
-var index = require('./routers/index');
-var users = require('./routers/users');
 var accounts = require('./routers/accounts');
 
 var heimdallr = express();
@@ -19,7 +17,7 @@ heimdallr.use(expressJwt({
   secret: configuration.jwt.tokenSecret,
   credentialsRequired: configuration.jwt.credentialsRequired
 }).unless({
-  path: ['/accounts/authenticate','/users']
+  path: ['/authenticate']
 }));
 
 heimdallr.use(bodyParser.json());
@@ -27,9 +25,7 @@ heimdallr.use(bodyParser.urlencoded({ extended: false }));
 heimdallr.use(cookieParser());
 // heimdallr.use(express.static(path.join(__dirname, 'public')));
 
-heimdallr.use('/', index);
-heimdallr.use('/users', users);
-heimdallr.use('/accounts', accounts);
+heimdallr.use('/', accounts);
 
 // catch 404 and forward to error handler
 heimdallr.use(function(req, res, next) {

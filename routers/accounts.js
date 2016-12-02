@@ -8,7 +8,7 @@ var cert = fs.readFileSync('./configurations/TLS/ryans-key.pem'); // secretOrPri
 
 router.post('/authenticate', function(req, res, next) {
     var account = req.body;
-    var token = jwt.sign(account, cert, {
+    var token = jwt.sign(account, "nonumber1989", {
         algorithm: configuration.jwt.jwtAlgorithm,
         expiresIn: configuration.jwt.expiresIn
     });
@@ -16,6 +16,5 @@ router.post('/authenticate', function(req, res, next) {
         userToken: token
     });
 });
-
 
 module.exports = router;
