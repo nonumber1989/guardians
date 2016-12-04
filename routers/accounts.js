@@ -52,6 +52,12 @@ router.post('/redis', function(req, res, next) {
 });
 
 router.get('/redis', function(req, res, next) {
+
+	redisClient.hgetall("hash key", function(err, reply) {
+	    // reply is null when the key is missing
+	    console.log(reply);
+	});
+	
     redisClient.hkeys("hash key", function(err, replies) {
         console.log(replies.length + " replies:");
         replies.forEach(function(reply, i) {
