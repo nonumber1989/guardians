@@ -6,19 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var configuration = require('./configurations/configuration');
-
 var accounts = require('./routers/accounts');
 
 var heimdallr = express();
 
 heimdallr.use(logger('dev'));
 //Authorization Bearer 
-heimdallr.use(expressJwt({
-  secret: configuration.jwt.tokenSecret,
-  credentialsRequired: configuration.jwt.credentialsRequired
-}).unless({
-  path: ['/authenticate']
-}));
+// heimdallr.use(expressJwt({
+//   secret: configuration.jwt.tokenSecret,
+//   credentialsRequired: configuration.jwt.credentialsRequired
+// }).unless({
+//   path: ['/authenticate']
+// }));
 
 heimdallr.use(bodyParser.json());
 heimdallr.use(bodyParser.urlencoded({ extended: false }));

@@ -15,7 +15,8 @@
   ],
   "keywords": [
     "guardians",
-    "redis"
+    "redis",
+    "socket.io"
   ],
   "private": true,
   "scripts": {
@@ -30,6 +31,7 @@
     "jsonwebtoken": "^7.1.9",
     "morgan": "~1.7.0",
     "node-redis": "^0.1.7",
+    "redis": "^2.6.3",
     "socket.io": "^1.6.0",
     "socketio-jwt": "^4.5.0"
   }
