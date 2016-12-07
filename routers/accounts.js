@@ -5,7 +5,9 @@ var router = express.Router();
 
 var configuration = require('../configurations/configuration');
 
-var redisClient = require('../configurations/redisClient');
+var storeClient = require('../configurations/redisClient').storeClient;
+var subClient = require('../configurations/redisClient').subClient;
+var pubClient = require('../configurations/redisClient').pubClient;
 
 // var cert = fs.readFileSync('./configurations/TLS/ryans-key.pem'); // secretOrPrivateKey
 
@@ -23,7 +25,7 @@ router.post('/authenticate', function(req, res, next) {
 
 router.post('/redis', function(req, res, next) {
     // var redis = req.body;
-    redisClient.set("string key", "string val", function print (err, reply) {
+    storeClient.set("stevenStr", "here is steven string test", function print (err, reply) {
     if (err) {
         // A error always begins with Error:
         console.log(err.toString());
@@ -31,7 +33,7 @@ router.post('/redis', function(req, res, next) {
         console.log('Reply: ' + reply);
     }
 });
-    redisClient.hset("hash key", "hashtest 1", "some value", function print (err, reply) {
+    storeClient.hset("stevenHash", "hashKeyOne", "hashValueOne", function print (err, reply) {
     if (err) {
         // A error always begins with Error:
         console.log(err.toString());
@@ -39,7 +41,7 @@ router.post('/redis', function(req, res, next) {
         console.log('Reply: ' + reply);
     }
 });
-    redisClient.hset(["hash key", "hashtest 2", "some other value"], function print (err, reply) {
+    storeClient.hset(["stevenHash", "hashKeyTwo", "hashValueTwo"], function print (err, reply) {
     if (err) {
         // A error always begins with Error:
         console.log(err.toString());
@@ -53,19 +55,41 @@ router.post('/redis', function(req, res, next) {
 
 router.get('/redis', function(req, res, next) {
 
-	redisClient.hgetall("hash key", function(err, reply) {
+	storeClient.hgetall("stevenHash", function(err, reply) {
 	    // reply is null when the key is missing
 	    console.log(reply);
 	});
 	
-    redisClient.hkeys("hash key", function(err, replies) {
+    storeClient.hkeys("stevenHash", function(err, replies) {
         console.log(replies.length + " replies:");
         replies.forEach(function(reply, i) {
             console.log("    " + i + ": " + reply);
         });
         res.json(replies);
-        // redisClient.quit();
+        // storeClient.quit();
     });
 });
+
+
+var msg_count = 0;
+
+subClient.on("subscribe", function (channel, count) {
+    pubClient.publish("a nice channel", "I am sending a message.");
+    pubClient.publish("a nice channel", "I am sending a second message.");
+    pubClient.publish("a nice channel", "I am sending my last message.");
+});
+
+subClient.on("message", function (channel, message) {
+    console.log("sub channel " + channel + ": " + message);
+    msg_count += 1;
+    if (msg_count === 10) {
+        subClient.unsubscribe();
+        subClient.quit();
+        pubClient.quit();
+    }
+});
+
+subClient.subscribe("a nice channel");
+
 
 module.exports = router;

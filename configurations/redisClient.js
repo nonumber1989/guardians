@@ -1,19 +1,47 @@
 var redis = require("redis");
-var client = redis.createClient();
-
-client.on('ready', function() {
-    console.log('Ready to Redis');
+//redis client only for store 
+var storeClient = redis.createClient();
+storeClient.on('ready', function() {
+    console.log('Store Client Ready to Redis');
 });
 
-client.on('connect', function() {
-    console.log('Connected to Redis');
+storeClient.on('connect', function() {
+    console.log('Store Client  Connected to Redis');
 });
 
-client.on("error", function(err) {
-    console.log("Error " + err);
+storeClient.on("error", function(err) {
+    console.log("Store Client  Error " + err);
 });
 
-module.exports = client;
+//redis client only for publishing event
+var publishingClient = redis.createClient();
+publishingClient.on('ready', function() {
+    console.log('Store Client Ready to Redis');
+});
 
+publishingClient.on('connect', function() {
+    console.log('Store Client  Connected to Redis');
+});
 
+publishingClient.on("error", function(err) {
+    console.log("Store Client  Error " + err);
+});
 
+//redis client only for subscribe event
+var subscribeClient = redis.createClient();
+subscribeClient.on('ready', function() {
+    console.log('Store Client Ready to Redis');
+});
+
+subscribeClient.on('connect', function() {
+    console.log('Store Client  Connected to Redis');
+});
+
+subscribeClient.on("error", function(err) {
+    console.log("Store Client  Error " + err);
+});
+module.exports = {
+    storeClient: storeClient,
+    pubClient: publishingClient,
+    subClient: subscribeClient
+};
