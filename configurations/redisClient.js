@@ -1,4 +1,9 @@
 var redis = require("redis");
+var bluebird = require("bluebird");
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
+
 //redis client only for store 
 var storeClient = redis.createClient();
 storeClient.on('ready', function() {
