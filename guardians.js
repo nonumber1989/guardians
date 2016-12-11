@@ -1,25 +1,8 @@
-var http = require('http');
 var socketIo = require('socket.io')
 var socketioJwt = require("socketio-jwt");
-var fs = require('fs');
-var namespaces = require('./configurations/configuration');
+var configuration = require('./configurations/configuration');
 
-//create http server 
-var server = http.createServer(function(req, res) {
-    fs.readFile(__dirname + '/index.html',
-        function(err, data) {
-            if (err) {
-                res.writeHead(500);
-                return res.end('Error loading index.html');
-            }
-
-            res.writeHead(200);
-            res.end(data);
-        });
-});
-
-var io = socketIo(server);
-
+var io = socketIo(configuration.socketIoPort);
 
 io.of('/chat').on('connection', socketioJwt.authorize({
         secret: 'nonumber1989',
@@ -49,5 +32,3 @@ setInterval(function() {
     io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
 }, 5000);
 
-
-server.listen(4000);

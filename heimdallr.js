@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var configuration = require('./configurations/configuration');
 var accounts = require('./routers/accounts');
+var index = require('./routers/index');
 
 var heimdallr = express();
 
@@ -25,6 +26,8 @@ heimdallr.use(cookieParser());
 // heimdallr.use(express.static(path.join(__dirname, 'public')));
 
 heimdallr.use('/', accounts);
+
+heimdallr.use('/index', index);
 
 // catch 404 and forward to error handler
 heimdallr.use(function(req, res, next) {
