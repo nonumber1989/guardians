@@ -47,6 +47,6 @@ subscribeClient.on("error", function(err) {
 });
 module.exports = {
     storeClient: storeClient,
-    pubClient: publishingClient,
-    subClient: subscribeClient
+    publishingClient: publishingClient,
+    subscribeClient: subscribeClient
 };

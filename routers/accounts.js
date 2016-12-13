@@ -6,8 +6,8 @@ var router = express.Router();
 var configuration = require('../configurations/configuration');
 
 var storeClient = require('../configurations/redisClient').storeClient;
-var subClient = require('../configurations/redisClient').subClient;
-var pubClient = require('../configurations/redisClient').pubClient;
+var subClient = require('../configurations/redisClient').subscribeClient;
+var pubClient = require('../configurations/redisClient').publishingClient;
 
 // var cert = fs.readFileSync('./configurations/TLS/ryans-key.pem'); // secretOrPrivateKey
 

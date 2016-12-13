@@ -1,41 +1,37 @@
 var socketIo = require('socket.io')
 var socketioJwt = require("socketio-jwt");
 var configuration = require('./configurations/configuration');
-var subClient = require('./configurations/redisClient').subClient;
+var redisClient = require('./configurations/redisClient');
 var io = socketIo(configuration.socketIoPort);
 
-io.of('/chat').on('connection', socketioJwt.authorize({
-        secret: 'nonumber1989',
-        timeout: 15000 // 15 seconds to send the authentication message
-    }))
-    .on('authenticated', function(socket) {
-        console.log('connected & authenticated: ' + JSON.stringify(socket.decoded_token));
-        socket.on('room', function(room) {
-            console.log("room ----" + room)
-            socket.join(room);
-        });
+io.of('/chat').on('connection', function(socket) {
+    console.log('someone connected');
 
-        socket.decoded_token.rooms.forEach(function(room) {
-            console.log(room + "---------------nonumber1989-------------------");
+    redisClient.storeClient.smembersAsync("steven").then(function(rooms) {
+        rooms.forEach(function(room, index) {
+            console.log("index " + index + "---" + room);
             socket.join(room);
+            redisClient.subscribeClient.subscribe(room);
         });
     });
 
-// now, it's easy to send a message to just the clients in a given room
-room = "abc123";
-// setInterval(function() {
-//     io.nsps['/chat'].in(room).emit('message', 'what is going on, party people?');
 
-//     io.nsps['/chat'].in('room1').emit('message', 'I was in room one');
-//     io.nsps['/chat'].in('room2').emit('message', 'i was in room two');
-//     // this message will NOT go to the client defined above
-//     io.sockets.in('foobar').emit('message', 'anyone in this room yet?');
-// }, 5000);
+    redisClient.storeClient.smembersAsync("patterns").then(function(patterns) {
+        patterns.forEach(function(pattern, index) {
+            console.log("index " + index + "---" + pattern);
+            socket.join(pattern);
+            redisClient.subscribeClient.psubscribeAsync(pattern);
+        });
+    });
 
-
-subClient.on("message", function(channel, message) {
-    console.log("socket with redis subscribe" + channel + ": " + message);
-    io.nsps['/chat'].in(room).emit('message', message);
+    socket.on('room', function(room) {
+        socket.join(room);
+    });
 });
 
-subClient.subscribe("nonumber1989");
+var room = "theRoom";
+
+redisClient.subscribeClient.on("message", function(channel, message) {
+    console.log("socket with redis subscribe" + channel + ": " + message);
+    io.nsps['/chat'].in(channel).emit('message', message);
+});

@@ -1,36 +1,21 @@
 <html>
 <!-- <script src="/socket.io/socket.io.js"></script> -->
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
 <body>
-	<h1>2222</h1>
+    <h1>Socket.io with Redis</h1>
 </body>
 <script>
- var socket = io.connect('http://localhost:5000/chat');
-var id_token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlN0ZXZlbiIsInJvb21zIjpbInJvb20xIiwicm9vbTIiXSwiaWF0IjoxNDgwODI1OTk0LCJleHAiOjE0ODE0MzA3OTR9.WCw8m0F0DFg2GtfmfbOEAyEiXlDD2ESxzWlEBvOSczo";
-var room = "abc123";
+var socket = io.connect('http://localhost:5000/chat');
+var room = "theRoom";
 
-socket
-    .on('connect', function(msg) {
-        console.log("connected");
-        socket.emit('authenticate', {
-            token: id_token
-        }); // send the jwt
-    })
-    .on('authenticated', function() {
-          socket.emit('room', room);
-    })
-    .on('unauthorized', function(msg) {
-        console.log("unauthorized: " + JSON.stringify(msg.data));
-        throw new Error(msg.data.type);
-    })
-    .on('chat message', function(msg) {
-        console.log("msg" + msg);
-    });
-
-socket.on('message', function(data) {
-   console.log('Incoming message:', data);
+socket.on('connect', function(msg) {
+    console.log("connected");
 });
-
-
+socket.emit('room', room);
+socket.on('message', function(data) {
+    console.log('Incoming message:', data);
+});
 </script>
+
 </html>
